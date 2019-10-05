@@ -1,31 +1,38 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Arrays;
+
+
+
 
 public class First_Follow{
     public static void main(String args []){
         
-        HashMap<String, String> derivations= new HashMap<String, String>();
-        derivations.put("E","TE'");
-        derivations.put("E'", "+TE'|#");
-        derivations.put("T","FT'");
-        derivations.put("T'", "*FT'|#");
-        derivations.put("F","(E)|id");
+        HashMap<String, String []> derivations= new HashMap<>();
+        derivations.put("E", "TE'".split("\\|"));
+        derivations.put("E'",  "+TE'|#".split("\\|"));
+        derivations.put("T",  "FT'".split("\\|"));
+        derivations.put("T'",  "*FT'|#".split("\\|"));
+        derivations.put("F", "(E)|id".split("\\|"));
 
-        //System.out.println(derivations);
-        findFirst(derivations);
+        String  s []=derivations.get("E'");
+        for (String var : s) {
+            System.out.print(var+" ");
+        }
+        //findFirst(derivations);
 
     }
 
-    public static void findFirst(HashMap<String, String> hm){
+    public static void findFirst(HashMap<String, String[]> hm){
         //for each key in keySet, go the first terminal, and append it to the follow set for that key, ad append the follow set to an array.
         ArrayList followSets= new ArrayList();
 
         //do recursive calls for each e
         for (String ruleLeft : hm.keySet()) {
-            findTerminal(hm, ruleLeft, followSets);
+            findTerminal(hm, ruleLeft, firstSets);
         }
-        System.out.print(followSets);
+        System.out.print(firstSets);
     }
 
     public static void findTerminal(HashMap<String, String> hm, String ruleLeft, ArrayList arr){
